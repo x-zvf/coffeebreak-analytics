@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-#YT_API_KEY = "AIzaSyAkCoS7xiQ-bN8uZ-8v9sjPWgrSzwJ3mNQ"
 YT_API_KEY = "AIzaSyCFAnTU7PFqf4Wecjmb_jDFRKlSYuyykCU"
 
 import os, math, statistics
@@ -51,8 +50,26 @@ def median_view_count(youtube, channel):
 
     #print(response)
     if len(response["items"]) == 0:
-        print("Could not find channel {}.".format(channel))
-        return
+        print("Could not find channel {}. Trying search".format(channel))
+        request = youtube.search().list(
+            part="id",
+            maxResults=1,
+            q="The Tonight Show Starring Jimmy Fallon",
+            safeSearch="none",
+            type="channel"
+        )
+        response = request.execute()
+        if len(response["items"]) == 0:
+            print("Failed to find channel {}.".format(channel))
+            return
+        request = youtube.channels().list(
+            part="contentDetails, statistics",
+            id=response["items"][0]["id"]["channelId"]
+        )
+        response = request.execute()
+
+
+
     uploads_playlist_id = response["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
     subscriber_count = response["items"][0]["statistics"]["subscriberCount"]
 
