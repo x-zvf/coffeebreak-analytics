@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-YT_API_KEY = "AIzaSyCFAnTU7PFqf4Wecjmb_jDFRKlSYuyykCU"
+YT_API_KEY = "YOUR API KEY HERE"
 
 import os, math, statistics
 
@@ -33,6 +33,7 @@ def main():
             if r is None:
                 print("[ERROR] failed to get channel {}".format(c))
             else:
+
                 csv_string = "{},{},{},{},\n".format(c, r[0], r[1], r[2])
                 with open("res.csv", "a") as f:
                     f.write(csv_string)
@@ -54,7 +55,7 @@ def median_view_count(youtube, channel):
         request = youtube.search().list(
             part="id",
             maxResults=1,
-            q="The Tonight Show Starring Jimmy Fallon",
+            q=channel,
             safeSearch="none",
             type="channel"
         )
