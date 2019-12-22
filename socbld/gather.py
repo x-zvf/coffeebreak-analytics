@@ -47,7 +47,7 @@ rd = db.rd
 ct = int(time.time())
 for t in tlist:
     t["seen_at"] = [{"time":ct, "rank_subs":t["rank_subscribers"]}]
-    print(f"Updating {t['channelid']}: ", end="")
+    print(f"Updating Rank {t['rank_subscribers']}: {t['username']}; {t['channelid']}: ", end="")
 
     sel = {"channelid":t["channelid"]}
     if rd.count_documents(sel) > 0:
